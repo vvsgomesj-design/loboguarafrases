@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobo Guará - Frases do Dia</title>
+    <title>Lobo Guará - Missão Frases</title>
     <style>
         :root { --bg-color: #ffffff; }
         body {
@@ -11,12 +11,25 @@
             background-color: var(--bg-color); display: flex; flex-direction: column;
             align-items: center; justify-content: flex-start; height: 100vh; overflow: hidden; cursor: none;
         }
+
+        /* Botão Voltar para o Menu */
+        #btn-home {
+            position: fixed; top: 15px; left: 15px; width: 60px; height: 60px;
+            background: white; border: 4px solid #1565C0; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 35px; cursor: pointer; z-index: 10000;
+            box-shadow: 0 4px 0 #1565C0; text-decoration: none;
+        }
+        #btn-home:active { transform: translateY(4px); box-shadow: none; }
+
         #instrucao-topo {
-            font-size: 1.5rem; color: #1565C0; background: white;
+            font-size: 1.3rem; color: #1565C0; background: white;
             padding: 10px 25px; border-radius: 50px; margin-top: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 3px solid #64B5F6;
         }
+
         #cursor-lobo { position: fixed; width: 70px; z-index: 9999; transform: translate(-50%, -50%); pointer-events: none; }
+        
         .rastro-peca {
             position: fixed; width: 40px; height: 40px; pointer-events: none;
             background-image: url('peca.png'); background-size: contain;
@@ -24,31 +37,39 @@
         }
         @keyframes sumir { 0%{opacity:1; transform:scale(1);} 100%{opacity:0; transform:scale(0.5);} }
         
-        .area-frase {
-            margin-top: 30px; width: 90%; display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 15px;
+        .area-desenho {
+            margin-top: 20px; width: 90%; display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 15px; min-height: 150px;
         }
+
         .bloco-palavra {
-            padding: 20px 30px; background: white; border: 6px solid #ccc;
-            border-radius: 25px; font-size: 2.2rem; font-weight: bold;
+            padding: 15px 25px; background: white; border: 5px solid #ccc;
+            border-radius: 20px; font-size: 1.8rem; font-weight: bold;
             cursor: pointer; box-shadow: 0 8px 0 #bbb; transition: 0.2s;
+            display: inline-block;
         }
-        #soma-texto { font-size: 2.5rem; margin: 20px 0; color: #1976D2; font-weight: bold; text-align: center; }
-        #emoji-grande { font-size: 100px; margin: 10px; }
+
+        #soma-texto { font-size: 2.2rem; margin: 15px 0; color: #1976D2; font-weight: bold; text-align: center; height: 40px; }
+        #emoji-grande { font-size: 90px; margin-top: 10px; }
+
         #btn-proximo {
             display: none; padding: 20px 50px; font-size: 2rem;
             background: #4CAF50; color: white; border: none;
-            border-radius: 20px; margin-top: 20px; box-shadow: 0 10px 0 #2E7D32;
+            border-radius: 20px; margin-top: 15px; box-shadow: 0 10px 0 #2E7D32;
         }
     </style>
 </head>
 <body>
 
+    <a href="index.html" id="btn-home">🏠</a>
+
     <img src="lobo.png" id="cursor-lobo">
-    <div id="instrucao-topo">Monte a frase tocando nas palavras!</div>
+    <div id="instrucao-topo">Toque nas palavras em ordem!</div>
     <div id="emoji-grande"></div>
     <div id="soma-texto"></div>
-    <div class="area-frase" id="area-blocos"></div>
+    
+    <div class="area-desenho" id="area-blocos"></div>
+
     <button id="btn-proximo" onclick="irParaProxima()">PRÓXIMA MISSÃO! ➔</button>
 
     <audio id="somEscrita" src="escrevendo.mp3" preload="auto"></audio>
@@ -57,12 +78,15 @@
         const somEscrita = document.getElementById('somEscrita');
         let dadosJogo = {};
         const urlParams = new URLSearchParams(window.location.search);
+        // Pega a frase pela URL ou começa no XIXI
         const fraseId = urlParams.get('s') || 'XIXI';
 
-        fetch('dados.json').then(r => r.json()).then(data => {
-            dadosJogo = data;
-            iniciarFase(data[fraseId]);
-        });
+        fetch('dados.json')
+            .then(r => r.json())
+            .then(data => {
+                dadosJogo = data;
+                iniciarFase(data[fraseId]);
+            });
 
         function iniciarFase(c) {
             if(!c) return;
@@ -81,15 +105,21 @@
                 btn.style.borderColor = c.cor_contorno;
 
                 const clicar = () => {
-                    if(btn.style.background === "") {
+                    if(btn.style.background === "" || btn.style.background === "white") {
                         btn.style.background = c.cor_contorno;
                         btn.style.color = "white";
                         btn.style.boxShadow = "none";
                         btn.style.transform = "translateY(8px)";
-                        somEscrita.currentTime = 0;
-                        somEscrita.play();
+                        
+                        if(somEscrita) {
+                            somEscrita.currentTime = 0;
+                            somEscrita.play();
+                        }
+
                         contagem++;
-                        if(contagem === partes.length) finalizarFrase(c);
+                        if(contagem === partes.length) {
+                            finalizarFrase(c);
+                        }
                     }
                 };
 
@@ -103,31 +133,41 @@
             document.getElementById('soma-texto').innerText = c.palavra;
             const utter = new SpeechSynthesisUtterance(c.fala_didatica);
             utter.lang = 'pt-BR';
-            utter.onend = () => document.getElementById('btn-proximo').style.display = "block";
+            utter.rate = 0.9;
+            utter.onend = () => {
+                document.getElementById('btn-proximo').style.display = "block";
+            };
             window.speechSynthesis.speak(utter);
         }
 
         function irParaProxima() {
             const prox = dadosJogo[fraseId].proximo;
-            if(prox === "FIM") window.location.href = 'final.html';
-            else window.location.href = `fase.html?s=${prox}`;
+            if(prox === "FIM") {
+                window.location.href = 'final.html';
+            } else {
+                window.location.href = `fase.html?s=${prox}`;
+            }
         }
 
-        // Rastro de Honra (Mouse e Toque)
+        // Rastro de Honra do Lobo Guará
         const lobo = document.getElementById('cursor-lobo');
         function moverLobo(x, y) {
-            lobo.style.left = x + 'px'; lobo.style.top = y + 'px';
+            lobo.style.left = x + 'px';
+            lobo.style.top = y + 'px';
             const p = document.createElement('div');
             p.className = 'rastro-peca';
-            p.style.left = (x-20)+'px'; p.style.top = (y-20)+'px';
+            p.style.left = (x - 20) + 'px';
+            p.style.top = (y - 20) + 'px';
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 800);
         }
+
         document.addEventListener('mousemove', e => moverLobo(e.clientX, e.clientY));
         document.addEventListener('touchmove', e => {
             const t = e.touches[0];
             moverLobo(t.clientX, t.clientY);
         }, {passive: false});
+
     </script>
 </body>
 </html>
