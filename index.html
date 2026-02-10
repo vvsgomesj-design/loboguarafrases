@@ -13,22 +13,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            cursor: none;
+            cursor: none; /* Esconde a seta do mouse no notebook */
         }
 
         h1 { color: #1565C0; text-shadow: 2px 2px white; font-size: 1.8rem; margin-bottom: 25px; }
 
-        /* Container de Rolagem */
         .lista-frases { 
             width: 95%; 
             max-width: 500px;
             display: flex; 
             flex-direction: column; 
             gap: 15px; 
-            padding-bottom: 50px; /* Espaço no final para não cortar o último botão */
+            padding-bottom: 50px;
         }
 
-        /* Botões Grandes Estilo Card */
         .card { 
             background: white; 
             padding: 25px; 
@@ -40,17 +38,13 @@
             font-size: 1.6rem;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Alinha ícone e texto à esquerda */
+            justify-content: flex-start;
             border: 4px solid transparent;
             transition: transform 0.1s;
         }
 
-        .card:active {
-            transform: scale(0.98);
-            box-shadow: 0 4px 0 #bbdefb;
-        }
+        .card:active { transform: scale(0.98); box-shadow: 0 4px 0 #bbdefb; }
 
-        /* Emoji Grande dentro do botão */
         .emoji-btn {
             font-size: 3rem;
             margin-right: 20px;
@@ -61,12 +55,31 @@
             text-align: center;
         }
 
-        #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
+        /* --- ESTILO DO LOBO E DO RASTRO --- */
+        #cursor-lobo { 
+            position: fixed; 
+            width: 70px; 
+            z-index: 10000; 
+            pointer-events: none; 
+            transform: translate(-50%, -50%); 
+            left: -100px; /* Começa fora da tela */
+        }
 
-        /* Ajuste para telas muito pequenas */
-        @media (max-width: 400px) {
-            .card { font-size: 1.3rem; padding: 15px; }
-            .emoji-btn { font-size: 2.2rem; min-width: 50px; }
+        .rastro-peca {
+            position: fixed; 
+            width: 40px; 
+            height: 40px; 
+            pointer-events: none;
+            background-image: url('peca.png'); 
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 9999; 
+            animation: sumir 0.8s forwards;
+        }
+
+        @keyframes sumir { 
+            0%{opacity:1; transform:scale(1);} 
+            100%{opacity:0; transform:scale(0.5);} 
         }
     </style>
 </head>
@@ -114,17 +127,32 @@
 
     <script>
         const lobo = document.getElementById('cursor-lobo');
-        
-        // Movimento do Lobo
-        const mover = (x, y) => {
+
+        function moverLobo(x, y) {
+            // Move a imagem do lobo seguindo o mouse ou toque
             lobo.style.left = x + 'px';
             lobo.style.top = y + 'px';
-        };
 
-        document.addEventListener('mousemove', e => mover(e.clientX, e.clientY));
-        document.addEventListener('touchmove', e => {
+            // Cria o rastro de pecinhas
+            const p = document.createElement('div');
+            p.className = 'rastro-peca';
+            p.style.left = (x - 20) + 'px';
+            p.style.top = (y - 20) + 'px';
+            document.body.appendChild(p);
+
+            // Remove a pecinha depois de 800ms
+            setTimeout(() => { p.remove(); }, 800);
+        }
+
+        // Detecta movimento do Mouse (Notebook)
+        document.addEventListener('mousemove', (e) => {
+            moverLobo(e.clientX, e.clientY);
+        });
+
+        // Detecta movimento do Toque (Celular)
+        document.addEventListener('touchmove', (e) => {
             const t = e.touches[0];
-            mover(t.clientX, t.clientY);
+            moverLobo(t.clientX, t.clientY);
         }, {passive: false});
     </script>
 </body>
