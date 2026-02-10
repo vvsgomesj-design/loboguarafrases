@@ -3,156 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobo Guará - Menu de Frases</title>
+    <title>Lobo Guará - Menu</title>
     <style>
-        body { 
-            font-family: 'Comic Sans MS', sans-serif; 
-            background: #E3F2FD; 
-            margin: 0; 
-            padding: 20px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: none; /* Esconde a seta do mouse no notebook */
-        }
-
-        h1 { color: #1565C0; text-shadow: 2px 2px white; font-size: 1.8rem; margin-bottom: 25px; }
-
-        .lista-frases { 
-            width: 95%; 
-            max-width: 500px;
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            padding-bottom: 50px;
-        }
-
+        body { font-family: 'Comic Sans MS', sans-serif; background: #E3F2FD; margin: 0; padding: 20px; text-align: center; cursor: none; }
+        h1 { color: #1565C0; font-size: 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; max-width: 1000px; margin: 0 auto; padding-bottom: 50px; }
         .card { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 25px; 
-            box-shadow: 0 8px 0 #bbdefb; 
-            text-decoration: none;
-            color: #1976D2; 
-            font-weight: bold; 
-            font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            border: 4px solid transparent;
-            transition: transform 0.1s;
+            background: white; padding: 20px; border-radius: 20px; box-shadow: 0 6px 0 #bbdefb;
+            text-decoration: none; color: #1976D2; font-weight: bold; font-size: 1.4rem;
+            display: flex; align-items: center; border: 3px solid transparent; transition: 0.2s;
         }
-
-        .card:active { transform: scale(0.98); box-shadow: 0 4px 0 #bbdefb; }
-
-        .emoji-btn {
-            font-size: 3rem;
-            margin-right: 20px;
-            background: #f0f7ff;
-            padding: 10px;
-            border-radius: 15px;
-            min-width: 70px;
-            text-align: center;
-        }
-
-        /* --- ESTILO DO LOBO E DO RASTRO --- */
-        #cursor-lobo { 
-            position: fixed; 
-            width: 70px; 
-            z-index: 10000; 
-            pointer-events: none; 
-            transform: translate(-50%, -50%); 
-            left: -100px; /* Começa fora da tela */
-        }
-
-        .rastro-peca {
-            position: fixed; 
-            width: 40px; 
-            height: 40px; 
-            pointer-events: none;
-            background-image: url('peca.png'); 
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 9999; 
-            animation: sumir 0.8s forwards;
-        }
-
-        @keyframes sumir { 
-            0%{opacity:1; transform:scale(1);} 
-            100%{opacity:0; transform:scale(0.5);} 
-        }
+        .card:active { transform: scale(0.95); box-shadow: none; }
+        .emoji { font-size: 2.5rem; margin-right: 15px; background: #F5F5F5; padding: 10px; border-radius: 12px; }
+        #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); left: -100px; }
     </style>
 </head>
 <body>
-
     <img src="lobo.png" id="cursor-lobo">
-
-    <h1>Escolha uma Frase:</h1>
-
-    <div class="lista-frases">
+    <h1>O que vamos falar?</h1>
+    <div class="grid">
         <a href="fase.html?s=AGUA" class="card">💧<br>Beber Água</a>
-        <a href="fase.html?s=XIXI" class="card">🚽<br>Ir ao Banheiro</a>
-        <a href="fase.html?s=PISCINA" class="card">🏊<br>Ir na Piscina</a>
-        <a href="fase.html?s=DORMIR" class="card">😴<br>Dormir</a>
-        
-        <a href="fase.html?s=BANANA" class="card">🍌<br>Comer Banana</a>
-        <a href="fase.html?s=MACARRAO" class="card">🍝<br>Comer Macarrão</a>
-        <a href="fase.html?s=BISCOITO" class="card">🍪<br>Comer Biscoito</a>
-        
-        <a href="fase.html?s=TV" class="card">📺<br>Assistir TV</a>
-        <a href="fase.html?s=DESENHO" class="card">🖍️<br>Este Desenho</a>
-        <a href="fase.html?s=DESENHO_BAIXO" class="card">👇<br>Desenho de Baixo</a>
-        <a href="fase.html?s=DESENHO_CIMA" class="card">☝️<br>Desenho de Cima</a>
-        
-        <a href="fase.html?s=BOLA" class="card">⚽<br>Brincar de Bola</a>
-        <a href="fase.html?s=DOMINO" class="card">🁫<br>Brincar de Dominó</a>
-        <a href="fase.html?s=CARRINHO" class="card">🚗<br>Brincar com Carrinho</a>
-        
-        <a href="fase.html?s=AMIGO" class="card">🧒<br>Brincar com Amigo</a>
-        <a href="fase.html?s=PAPAI" class="card">👨<br>Brincar com o Papai</a>
-        <a href="fase.html?s=IRMAO" class="card">👦<br>Brincar com o Irmão</a>
-        <a href="fase.html?s=VOVO" class="card">👴<br>Brincar com o Vovô</a>
-        
-        <a href="fase.html?s=SHOPPING" class="card">🛍️<br>Passear no Shopping</a>
-        <a href="fase.html?s=VOVO_CASA" class="card">🏡<br>Casa da Vovó</a>
-        <a href="fase.html?s=CRECHE" class="card">🏫<br>Ir para a Creche</a>
-        
-        <a href="fase.html?s=ALFABETO" class="card">🔤<br>Montar o Alfabeto</a>
-        <a href="fase.html?s=CANTAR" class="card">🎤<br>Cantar</a>
-        
-        <a href="fase.html?s=ORACAO" class="card">🙏<br>Fazer Oração</a>
-        <a href="fase.html?s=PAPAI_CEU" class="card">☁️<br>Falar com o Papai do Céu</a>
-        <a href="fase.html?s=JESUS" class="card">❤️<br>Amo Jesus</a>
+<a href="fase.html?s=XIXI" class="card">🚽<br>Ir ao Banheiro</a>
+<a href="fase.html?s=PISCINA" class="card">🏊<br>Ir na Piscina</a>
+<a href="fase.html?s=DORMIR" class="card">😴<br>Dormir</a>
+
+<a href="fase.html?s=BANANA" class="card">🍌<br>Comer Banana</a>
+<a href="fase.html?s=MACARRAO" class="card">🍝<br>Comer Macarrão</a>
+<a href="fase.html?s=BISCOITO" class="card">🍪<br>Comer Biscoito</a>
+
+<a href="fase.html?s=TV" class="card">📺<br>Assistir TV</a>
+<a href="fase.html?s=DESENHO" class="card">🖍️<br>Este Desenho</a>
+<a href="fase.html?s=DESENHO_BAIXO" class="card">👇<br>Desenho de Baixo</a>
+<a href="fase.html?s=DESENHO_CIMA" class="card">☝️<br>Desenho de Cima</a>
+
+<a href="fase.html?s=BOLA" class="card">⚽<br>Brincar de Bola</a>
+<a href="fase.html?s=DOMINO" class="card">🁫<br>Brincar de Dominó</a>
+<a href="fase.html?s=CARRINHO" class="card">🚗<br>Brincar com Carrinho</a>
+
+<a href="fase.html?s=AMIGO" class="card">🧒<br>Brincar com Amigo</a>
+<a href="fase.html?s=PAPAI" class="card">👨<br>Brincar com o Papai</a>
+<a href="fase.html?s=IRMAO" class="card">👦<br>Brincar com o Irmão</a>
+<a href="fase.html?s=VOVO" class="card">👴<br>Brincar com o Vovô</a>
+
+<a href="fase.html?s=SHOPPING" class="card">🛍️<br>Passear no Shopping</a>
+<a href="fase.html?s=VOVO_CASA" class="card">🏡<br>Casa da Vovó</a>
+<a href="fase.html?s=CRECHE" class="card">🏫<br>Ir para a Creche</a>
+
+<a href="fase.html?s=ALFABETO" class="card">🔤<br>Montar o Alfabeto</a>
+<a href="fase.html?s=CANTAR" class="card">🎤<br>Cantar</a>
+
+<a href="fase.html?s=ORACAO" class="card">🙏<br>Fazer Oração</a>
+<a href="fase.html?s=PAPAI_CEU" class="card">☁️<br>Falar com o Papai do Céu</a>
+<a href="fase.html?s=JESUS" class="card">❤️<br>Amo Jesus</a>
     </div>
 
     <script>
         const lobo = document.getElementById('cursor-lobo');
-
-        function moverLobo(x, y) {
-            // Move a imagem do lobo seguindo o mouse ou toque
-            lobo.style.left = x + 'px';
-            lobo.style.top = y + 'px';
-
-            // Cria o rastro de pecinhas
-            const p = document.createElement('div');
-            p.className = 'rastro-peca';
-            p.style.left = (x - 20) + 'px';
-            p.style.top = (y - 20) + 'px';
-            document.body.appendChild(p);
-
-            // Remove a pecinha depois de 800ms
-            setTimeout(() => { p.remove(); }, 800);
-        }
-
-        // Detecta movimento do Mouse (Notebook)
-        document.addEventListener('mousemove', (e) => {
-            moverLobo(e.clientX, e.clientY);
-        });
-
-        // Detecta movimento do Toque (Celular)
-        document.addEventListener('touchmove', (e) => {
-            const t = e.touches[0];
-            moverLobo(t.clientX, t.clientY);
+        document.addEventListener('mousemove', e => { lobo.style.left = e.clientX + 'px'; lobo.style.top = e.clientY + 'px'; });
+        document.addEventListener('touchmove', e => { 
+            const t = e.touches[0]; lobo.style.left = t.clientX + 'px'; lobo.style.top = t.clientY + 'px'; 
         }, {passive: false});
     </script>
 </body>
