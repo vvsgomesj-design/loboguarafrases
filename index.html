@@ -2,32 +2,90 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Lobo Guará - Comunicação</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobo Guará - Menu de Frases</title>
     <style>
-        body { font-family: 'Comic Sans MS', sans-serif; background: #E3F2FD; text-align: center; cursor: none; }
-        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-        .card { 
-            background: white; padding: 20px; border-radius: 20px; 
-            box-shadow: 0 8px 0 #bbdefb; width: 200px; text-decoration: none;
-            color: #1976D2; font-weight: bold; font-size: 1.2rem;
+        body { 
+            font-family: 'Comic Sans MS', sans-serif; 
+            background: #E3F2FD; 
+            margin: 0; 
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: none;
         }
-        .card:hover { transform: scale(1.05); }
-        #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 9999; }
+
+        h1 { color: #1565C0; text-shadow: 2px 2px white; font-size: 1.8rem; margin-bottom: 25px; }
+
+        /* Container de Rolagem */
+        .lista-frases { 
+            width: 95%; 
+            max-width: 500px;
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            padding-bottom: 50px; /* Espaço no final para não cortar o último botão */
+        }
+
+        /* Botões Grandes Estilo Card */
+        .card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 25px; 
+            box-shadow: 0 8px 0 #bbdefb; 
+            text-decoration: none;
+            color: #1976D2; 
+            font-weight: bold; 
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Alinha ícone e texto à esquerda */
+            border: 4px solid transparent;
+            transition: transform 0.1s;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 0 #bbdefb;
+        }
+
+        /* Emoji Grande dentro do botão */
+        .emoji-btn {
+            font-size: 3rem;
+            margin-right: 20px;
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 15px;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
+
+        /* Ajuste para telas muito pequenas */
+        @media (max-width: 400px) {
+            .card { font-size: 1.3rem; padding: 15px; }
+            .emoji-btn { font-size: 2.2rem; min-width: 50px; }
+        }
     </style>
 </head>
 <body>
+
     <img src="lobo.png" id="cursor-lobo">
-    <h1>O que você quer fazer agora?</h1>
-    <div class="grid">
+
+    <h1>Escolha uma Frase:</h1>
+
+    <div class="lista-frases">
         <a href="fase.html?s=AGUA" class="card">💧<br>Beber Água</a>
         <a href="fase.html?s=XIXI" class="card">🚽<br>Ir ao Banheiro</a>
         <a href="fase.html?s=PISCINA" class="card">🏊<br>Ir na Piscina</a>
         <a href="fase.html?s=DORMIR" class="card">😴<br>Dormir</a>
-
+        
         <a href="fase.html?s=BANANA" class="card">🍌<br>Comer Banana</a>
         <a href="fase.html?s=MACARRAO" class="card">🍝<br>Comer Macarrão</a>
         <a href="fase.html?s=BISCOITO" class="card">🍪<br>Comer Biscoito</a>
-
+        
         <a href="fase.html?s=TV" class="card">📺<br>Assistir TV</a>
         <a href="fase.html?s=DESENHO" class="card">🖍️<br>Este Desenho</a>
         <a href="fase.html?s=DESENHO_BAIXO" class="card">👇<br>Desenho de Baixo</a>
@@ -41,7 +99,7 @@
         <a href="fase.html?s=PAPAI" class="card">👨<br>Brincar com o Papai</a>
         <a href="fase.html?s=IRMAO" class="card">👦<br>Brincar com o Irmão</a>
         <a href="fase.html?s=VOVO" class="card">👴<br>Brincar com o Vovô</a>
-
+        
         <a href="fase.html?s=SHOPPING" class="card">🛍️<br>Passear no Shopping</a>
         <a href="fase.html?s=VOVO_CASA" class="card">🏡<br>Casa da Vovó</a>
         <a href="fase.html?s=CRECHE" class="card">🏫<br>Ir para a Creche</a>
@@ -52,13 +110,22 @@
         <a href="fase.html?s=ORACAO" class="card">🙏<br>Fazer Oração</a>
         <a href="fase.html?s=PAPAI_CEU" class="card">☁️<br>Falar com o Papai do Céu</a>
         <a href="fase.html?s=JESUS" class="card">❤️<br>Amo Jesus</a>
-
     </div>
+
     <script>
         const lobo = document.getElementById('cursor-lobo');
-        document.addEventListener('mousemove', e => {
-            lobo.style.left = e.clientX + 'px'; lobo.style.top = e.clientY + 'px';
-        });
+        
+        // Movimento do Lobo
+        const mover = (x, y) => {
+            lobo.style.left = x + 'px';
+            lobo.style.top = y + 'px';
+        };
+
+        document.addEventListener('mousemove', e => mover(e.clientX, e.clientY));
+        document.addEventListener('touchmove', e => {
+            const t = e.touches[0];
+            mover(t.clientX, t.clientY);
+        }, {passive: false});
     </script>
 </body>
 </html>
