@@ -149,25 +149,34 @@
             }
         }
 
-        // Rastro de Honra do Lobo Guará
         const lobo = document.getElementById('cursor-lobo');
+
         function moverLobo(x, y) {
+            // Move a imagem do lobo
             lobo.style.left = x + 'px';
             lobo.style.top = y + 'px';
+
+            // Cria a pecinha do rastro
             const p = document.createElement('div');
             p.className = 'rastro-peca';
             p.style.left = (x - 20) + 'px';
             p.style.top = (y - 20) + 'px';
             document.body.appendChild(p);
+
+            // Remove a pecinha depois de 800ms
             setTimeout(() => p.remove(), 800);
         }
 
-        document.addEventListener('mousemove', e => moverLobo(e.clientX, e.clientY));
+        // Evento para Computador
+        document.addEventListener('mousemove', e => {
+            moverLobo(e.clientX, e.clientY);
+        });
+
+        // Evento para Celular/Tablet
         document.addEventListener('touchmove', e => {
             const t = e.touches[0];
             moverLobo(t.clientX, t.clientY);
         }, {passive: false});
-
     </script>
 </body>
 </html>
