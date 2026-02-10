@@ -1,4 +1,13 @@
 {
+  "AGUA": {
+    "emoji": "💧",
+    "palavra": "EU QUERO BEBER ÁGUA",
+    "soma_texto": "EU + QUERO + BEBER + ÁGUA",
+    "fala_didatica": "Eu quero beber água! Água faz bem para o corpo.",
+    "cor_fundo": "#E3F2FD",
+    "cor_contorno": "#1976D2",
+    "proximo": "XIXI"
+  },
   "XIXI": {
     "emoji": "🚽",
     "palavra": "EU QUERO FAZER XIXI",
@@ -66,7 +75,7 @@
     "emoji": "🖍️",
     "palavra": "EU QUERO ESTE DESENHO",
     "soma_texto": "EU + QUERO + ESTE + DESENHO",
-    "fala_didatica": "Eu quero este desenho! Muito bem.",
+    "fala_didatica": "Eu quero este desenho!",
     "cor_fundo": "#F3E5F5",
     "cor_contorno": "#8E24AA",
     "proximo": "DESENHO_BAIXO"
@@ -93,7 +102,7 @@
     "emoji": "⚽",
     "palavra": "EU QUERO BRINCAR DE BOLA",
     "soma_texto": "EU + QUERO + BRINCAR + DE + BOLA",
-    "fala_didatica": "Eu quero brincar de bola! Vamos jogar.",
+    "fala_didatica": "Eu quero brincar de bola!",
     "cor_fundo": "#FFFDE7",
     "cor_contorno": "#F9A825",
     "proximo": "DOMINO"
@@ -102,16 +111,79 @@
     "emoji": "🁫",
     "palavra": "EU QUERO BRINCAR DE DOMINÓ",
     "soma_texto": "EU + QUERO + BRINCAR + DE + DOMINÓ",
-    "fala_didatica": "Eu quero brincar de dominó! Vamos montar.",
+    "fala_didatica": "Eu quero brincar de dominó!",
     "cor_fundo": "#ECEFF1",
     "cor_contorno": "#455A64",
+    "proximo": "CARRINHO"
+  },
+  "CARRINHO": {
+    "emoji": "🚗",
+    "palavra": "EU QUERO BRINCAR COM O CARRINHO",
+    "soma_texto": "EU + QUERO + BRINCAR + CARRINHO",
+    "fala_didatica": "Eu quero brincar com o carrinho!",
+    "cor_fundo": "#E1F5FE",
+    "cor_contorno": "#0288D1",
+    "proximo": "AMIGO"
+  },
+  "AMIGO": {
+    "emoji": "🧒",
+    "palavra": "EU QUERO BRINCAR COM MEU AMIGO",
+    "soma_texto": "EU + QUERO + BRINCAR + AMIGO",
+    "fala_didatica": "Eu quero brincar com meu amigo!",
+    "cor_fundo": "#E8F5E9",
+    "cor_contorno": "#2E7D32",
+    "proximo": "PAPAI"
+  },
+  "PAPAI": {
+    "emoji": "👨",
+    "palavra": "EU QUERO BRINCAR COM O PAPAI",
+    "soma_texto": "EU + QUERO + BRINCAR + PAPAI",
+    "fala_didatica": "Eu quero brincar com o papai!",
+    "cor_fundo": "#E3F2FD",
+    "cor_contorno": "#1565C0",
+    "proximo": "IRMAO"
+  },
+  "IRMAO": {
+    "emoji": "👦",
+    "palavra": "EU QUERO BRINCAR COM MEU IRMÃO",
+    "soma_texto": "EU + QUERO + BRINCAR + IRMÃO",
+    "fala_didatica": "Eu quero brincar com meu irmão!",
+    "cor_fundo": "#F3E5F5",
+    "cor_contorno": "#8E24AA",
+    "proximo": "VOVO"
+  },
+  "VOVO": {
+    "emoji": "👴",
+    "palavra": "EU QUERO BRINCAR COM O VOVÔ",
+    "soma_texto": "EU + QUERO + BRINCAR + VOVÔ",
+    "fala_didatica": "Eu quero brincar com o vovô!",
+    "cor_fundo": "#FFF3E0",
+    "cor_contorno": "#EF6C00",
+    "proximo": "SHOPPING"
+  },
+  "SHOPPING": {
+    "emoji": "🛍️",
+    "palavra": "EU QUERO PASSEAR NO SHOPPING",
+    "soma_texto": "EU + QUERO + PASSEAR + SHOPPING",
+    "fala_didatica": "Eu quero passear no shopping!",
+    "cor_fundo": "#FCE4EC",
+    "cor_contorno": "#C2185B",
+    "proximo": "VOVO_CASA"
+  },
+  "VOVO_CASA": {
+    "emoji": "🏡",
+    "palavra": "EU QUERO IR PRA CASA DA VOVÓ",
+    "soma_texto": "EU + QUERO + IR + CASA + VOVÓ",
+    "fala_didatica": "Eu quero ir pra casa da vovó!",
+    "cor_fundo": "#FFFDE7",
+    "cor_contorno": "#FBC02D",
     "proximo": "CRECHE"
   },
   "CRECHE": {
     "emoji": "🏫",
     "palavra": "EU QUERO IR PARA A CRECHE",
     "soma_texto": "EU + QUERO + IR + PARA + CRECHE",
-    "fala_didatica": "Eu quero ir para a creche! Vamos aprender.",
+    "fala_didatica": "Eu quero ir para a creche!",
     "cor_fundo": "#E1F5FE",
     "cor_contorno": "#0288D1",
     "proximo": "ALFABETO"
@@ -120,7 +192,7 @@
     "emoji": "🔤",
     "palavra": "EU QUERO MONTAR O ALFABETO",
     "soma_texto": "EU + QUERO + MONTAR + ALFABETO",
-    "fala_didatica": "Eu quero montar o alfabeto! Muito bem.",
+    "fala_didatica": "Eu quero montar o alfabeto!",
     "cor_fundo": "#FCE4EC",
     "cor_contorno": "#C2185B",
     "proximo": "CANTAR"
@@ -129,7 +201,7 @@
     "emoji": "🎤",
     "palavra": "EU QUERO CANTAR",
     "soma_texto": "EU + QUERO + CANTAR",
-    "fala_didatica": "Eu quero cantar! Vamos cantar juntos.",
+    "fala_didatica": "Eu quero cantar!",
     "cor_fundo": "#FFF8E1",
     "cor_contorno": "#FF8F00",
     "proximo": "ORACAO"
@@ -138,7 +210,7 @@
     "emoji": "🙏",
     "palavra": "EU QUERO FAZER UMA ORAÇÃO",
     "soma_texto": "EU + QUERO + FAZER + ORAÇÃO",
-    "fala_didatica": "Eu quero fazer uma oração! Vamos falar com Deus.",
+    "fala_didatica": "Eu quero fazer uma oração!",
     "cor_fundo": "#EDE7F6",
     "cor_contorno": "#5E35B1",
     "proximo": "PAPAI_CEU"
@@ -162,3 +234,4 @@
     "proximo": "FIM"
   }
 }
+
