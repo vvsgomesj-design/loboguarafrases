@@ -64,5 +64,24 @@
             const t = e.touches[0]; lobo.style.left = t.clientX + 'px'; lobo.style.top = t.clientY + 'px'; 
         }, {passive: false});
     </script>
+    <script>
+        // Esta parte lê as frases novas que os pais salvaram no celular/computador
+        const gridMenu = document.querySelector('.grid') || document.querySelector('.lista-frases'); 
+        const personalizadas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+
+        Object.keys(personalizadas).forEach(id => {
+            const p = personalizadas[id];
+            const novoCard = document.createElement('a');
+            
+            // Avisa o jogo que essa frase é personalizada com o &custom=true
+            novoCard.href = `fase.html?s=${id}&custom=true`;
+            novoCard.className = 'card';
+            
+            // Usa o emoji e o ID que o pai escolheu
+            novoCard.innerHTML = `<span class="emoji-btn">${p.emoji}</span> ${id}`;
+            
+            if (gridMenu) gridMenu.appendChild(novoCard);
+        });
+    </script>
 </body>
 </html>
