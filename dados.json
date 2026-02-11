@@ -20,7 +20,7 @@
   "PISCINA": {
     "emoji": "🏊",
     "palavra": "EU QUERO IR NA PISCINA",
-    "soma_texto": "EU + QUERO + IR + PISCINA",
+    "soma_texto": "EU + QUERO + IR + NA + PISCINA",
     "fala_didatica": "Eu quero ir na piscina! Que delícia nadar.",
     "cor_fundo": "#B2EBF2",
     "cor_contorno": "#00BCD4",
@@ -119,7 +119,7 @@
   "CARRINHO": {
     "emoji": "🚗",
     "palavra": "EU QUERO BRINCAR COM O CARRINHO",
-    "soma_texto": "EU + QUERO + BRINCAR + CARRINHO",
+    "soma_texto": "EU + QUERO + BRINCAR + COM + O + CARRINHO",
     "fala_didatica": "Eu quero brincar com o carrinho!",
     "cor_fundo": "#E1F5FE",
     "cor_contorno": "#0288D1",
@@ -128,7 +128,7 @@
   "AMIGO": {
     "emoji": "🧒",
     "palavra": "EU QUERO BRINCAR COM MEU AMIGO",
-    "soma_texto": "EU + QUERO + BRINCAR + AMIGO",
+    "soma_texto": "EU + QUERO + BRINCAR + COM + O + MEU + AMIGO",
     "fala_didatica": "Eu quero brincar com meu amigo!",
     "cor_fundo": "#E8F5E9",
     "cor_contorno": "#2E7D32",
@@ -137,7 +137,7 @@
   "PAPAI": {
     "emoji": "👨",
     "palavra": "EU QUERO BRINCAR COM O PAPAI",
-    "soma_texto": "EU + QUERO + BRINCAR + PAPAI",
+    "soma_texto": "EU + QUERO + BRINCAR + COM + O + PAPAI",
     "fala_didatica": "Eu quero brincar com o papai!",
     "cor_fundo": "#E3F2FD",
     "cor_contorno": "#1565C0",
@@ -146,7 +146,7 @@
   "IRMAO": {
     "emoji": "👦",
     "palavra": "EU QUERO BRINCAR COM MEU IRMÃO",
-    "soma_texto": "EU + QUERO + BRINCAR + IRMÃO",
+    "soma_texto": "EU + QUERO + BRINCAR + COM + O + MEU + IRMÃO",
     "fala_didatica": "Eu quero brincar com meu irmão!",
     "cor_fundo": "#F3E5F5",
     "cor_contorno": "#8E24AA",
@@ -155,7 +155,7 @@
   "VOVO": {
     "emoji": "👴",
     "palavra": "EU QUERO BRINCAR COM O VOVÔ",
-    "soma_texto": "EU + QUERO + BRINCAR + VOVÔ",
+    "soma_texto": "EU + QUERO + BRINCAR + COM + O + VOVÔ",
     "fala_didatica": "Eu quero brincar com o vovô!",
     "cor_fundo": "#FFF3E0",
     "cor_contorno": "#EF6C00",
@@ -164,7 +164,7 @@
   "SHOPPING": {
     "emoji": "🛍️",
     "palavra": "EU QUERO PASSEAR NO SHOPPING",
-    "soma_texto": "EU + QUERO + PASSEAR + SHOPPING",
+    "soma_texto": "EU + QUERO + PASSEAR + NO + SHOPPING",
     "fala_didatica": "Eu quero passear no shopping!",
     "cor_fundo": "#FCE4EC",
     "cor_contorno": "#C2185B",
@@ -173,7 +173,7 @@
   "VOVO_CASA": {
     "emoji": "🏡",
     "palavra": "EU QUERO IR PRA CASA DA VOVÓ",
-    "soma_texto": "EU + QUERO + IR + CASA + VOVÓ",
+    "soma_texto": "EU + QUERO + IR + CASA + DA + VOVÓ",
     "fala_didatica": "Eu quero ir pra casa da vovó!",
     "cor_fundo": "#FFFDE7",
     "cor_contorno": "#FBC02D",
@@ -191,7 +191,7 @@
   "ALFABETO": {
     "emoji": "🔤",
     "palavra": "EU QUERO MONTAR O ALFABETO",
-    "soma_texto": "EU + QUERO + MONTAR + ALFABETO",
+    "soma_texto": "EU + QUERO + MONTAR + O + ALFABETO",
     "fala_didatica": "Eu quero montar o alfabeto!",
     "cor_fundo": "#FCE4EC",
     "cor_contorno": "#C2185B",
@@ -209,7 +209,7 @@
   "ORACAO": {
     "emoji": "🙏",
     "palavra": "EU QUERO FAZER UMA ORAÇÃO",
-    "soma_texto": "EU + QUERO + FAZER + ORAÇÃO",
+    "soma_texto": "EU + QUERO + FAZER + UMA + ORAÇÃO",
     "fala_didatica": "Eu quero fazer uma oração!",
     "cor_fundo": "#EDE7F6",
     "cor_contorno": "#5E35B1",
@@ -218,7 +218,7 @@
   "PAPAI_CEU": {
     "emoji": "☁️",
     "palavra": "EU QUERO FALAR COM O PAPAI DO CÉU",
-    "soma_texto": "EU + QUERO + FALAR + PAPAI + CÉU",
+    "soma_texto": "EU + QUERO + FALAR + O + PAPAI + CÉU",
     "fala_didatica": "Eu quero falar com o Papai do Céu!",
     "cor_fundo": "#E3F2FD",
     "cor_contorno": "#1565C0",
