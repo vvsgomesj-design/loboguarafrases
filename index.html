@@ -69,14 +69,22 @@
     <hr style="margin: 40px 0; border: 1px solid #90CAF9;">
 
     <div class="painel-criar">
-        <h3>➕ Adicionar Nova Frase</h3>
-        <input type="text" id="novoID" placeholder="Nome (Ex: ABRAÇO)">
-        <input type="text" id="novoEmoji" placeholder="Emoji (Ex: 🤗)">
-        <input type="text" id="novaSoma" placeholder="Palavras (Ex: EU + QUERO + ABRAÇO)">
-        <input type="text" id="novaFala" placeholder="O que o lobo fala no fim?">
-        <br>
-        <button class="btn-salvar" onclick="salvarNovaFrase()">SALVAR NO DISPOSITIVO</button>
+    <h3>➕ Criar Frase com o Lobo</h3>
+    
+    <p style="font-size: 0.9rem; color: #666;">Dica: Use <b>Windows + .</b> para colocar emojis!</p>
+    <input type="text" id="novoEmoji" placeholder="Coloque o Emoji aqui">
+    
+    <input type="text" id="novoID" placeholder="Nome do Botão (Ex: LANCHE)">
+    
+    <div id="container-palavras">
+        <input type="text" class="palavra-input" placeholder="Palavra 1 (Ex: EU)">
+        <input type="text" class="palavra-input" placeholder="Palavra 2 (Ex: QUERO)">
+        <input type="text" class="palavra-input" placeholder="Palavra 3 (Ex: MAÇÃ)">
     </div>
+    
+    <p style="font-size: 0.8rem; color: #1565C0;">O Lobo falará a frase completa no final.</p>
+    <button class="btn-salvar" onclick="salvarNovaFrase()">SALVAR NO DISPOSITIVO</button>
+</div>
 
     <script>
         // 1. Mover Lobo
