@@ -82,6 +82,18 @@
             
             if (gridMenu) gridMenu.appendChild(novoCard);
         });
+        // Código para carregar frases personalizadas no menu
+    const listaExtra = document.querySelector('.grid'); // Seleciona onde ficam os botões
+    const personalizadas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+
+    Object.keys(personalizadas).forEach(id => {
+        const p = personalizadas[id];
+        const novoCard = document.createElement('a');
+        novoCard.href = `fase.html?s=${id}&custom=true`;
+        novoCard.className = 'card';
+        novoCard.innerHTML = `<span class="emoji">${p.emoji}</span> ${p.id || id}`;
+        listaExtra.appendChild(novoCard);
+    });
     </script>
 </body>
 </html>
