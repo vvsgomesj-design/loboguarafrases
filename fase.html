@@ -3,36 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobo Guará - Frases</title>
+    <title>Lobo Guará - Missão Animada</title>
     <style>
         body { margin: 0; font-family: 'Comic Sans MS', sans-serif; text-align: center; overflow: hidden; cursor: none; height: 100vh; }
+        
+        /* Botão Home */
         #btn-home { position: fixed; top: 15px; left: 15px; width: 60px; height: 60px; background: white; border: 4px solid #1565C0; border-radius: 15px; font-size: 30px; display: flex; align-items: center; justify-content: center; z-index: 10001; text-decoration: none; box-shadow: 0 4px 0 #1565C0; }
+
+        /* Cursor e Rastro */
         #cursor-lobo { position: fixed; width: 65px; z-index: 10000; pointer-events: none; transform: translate(-50%, -50%); left: -100px; }
         .rastro-peca { position: fixed; width: 35px; height: 35px; background-image: url('peca.png'); background-size: contain; pointer-events: none; z-index: 9999; animation: sumir 0.8s forwards; }
         @keyframes sumir { to { opacity: 0; transform: scale(0.5); } }
-        #emoji-fase { font-size: 100px; margin-top: 60px; }
-        #display-frase { font-size: 2.2rem; color: #1565C0; font-weight: bold; margin: 20px; min-height: 50px; }
+
+        /* Elementos da Fase */
+        #emoji-fase { font-size: 100px; margin-top: 60px; transition: 0.5s; display: inline-block; }
+        
+        #display-frase { 
+            font-size: 2.5rem; color: #1565C0; font-weight: bold; 
+            margin: 20px; min-height: 60px; opacity: 0; 
+        }
+
         .area-blocos { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
-        .bloco { padding: 20px 35px; background: white; border: 6px solid #ccc; border-radius: 25px; font-size: 2rem; font-weight: bold; cursor: pointer; box-shadow: 0 8px 0 #bbb; }
-        #btn-prox { display: none; margin: 20px auto; padding: 20px 50px; font-size: 2rem; background: #4CAF50; color: white; border-radius: 25px; border: none; box-shadow: 0 8px 0 #2E7D32; cursor: pointer; }
+        
+        .bloco { 
+            padding: 20px 35px; background: white; border: 6px solid #ccc; 
+            border-radius: 25px; font-size: 2rem; font-weight: bold; 
+            cursor: pointer; box-shadow: 0 8px 0 #bbb; transition: 0.2s;
+        }
+
+        #btn-prox { 
+            display: none; margin: 20px auto; padding: 20px 50px; 
+            font-size: 2rem; background: #4CAF50; color: white; 
+            border-radius: 25px; border: none; box-shadow: 0 8px 0 #2E7D32; 
+        }
+
+        /* --- ANIMAÇÕES DE VITÓRIA --- */
+        .animar-emoji { animation: pulaGira 1s ease-out; }
+        
+        @keyframes pulaGira {
+            0% { transform: scale(1) rotate(0deg); }
+            30% { transform: scale(1.4) translateY(-20px) rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+            100% { transform: scale(1) translateY(0) rotate(0deg); }
+        }
+
+        .animar-frase { animation: surgeFrase 0.8s forwards; }
+        
+        @keyframes surgeFrase {
+            0% { opacity: 0; transform: translateY(20px); color: #FF5722; }
+            100% { opacity: 1; transform: translateY(0); color: #1565C0; }
+        }
     </style>
 </head>
 <body>
+
     <a href="index.html" id="btn-home">🏠</a>
     <img src="lobo.png" id="cursor-lobo">
+    
     <div id="emoji-fase"></div>
     <div id="display-frase"></div>
+    
     <div class="area-blocos" id="area-blocos"></div>
+    
     <button id="btn-prox" onclick="proxima()">PRÓXIMA ➔</button>
 
     <script>
         let dadosGlobal = {};
-        const fraseId = new URLSearchParams(window.location.search).get('s') || 'AGUA';
+        const urlParams = new URLSearchParams(window.location.search);
+        const fraseId = urlParams.get('s') || 'AGUA';
 
         fetch('dados.json').then(r => r.json()).then(data => {
             dadosGlobal = data;
             montarFase(data[fraseId]);
-        }).catch(e => alert("Erro ao carregar dados.json: " + e));
+        });
 
         function falar(t, v) {
             window.speechSynthesis.cancel();
@@ -45,7 +88,9 @@
         function montarFase(c) {
             if(!c) return;
             document.body.style.backgroundColor = c.cor_fundo;
-            document.getElementById('emoji-fase').innerText = c.emoji;
+            const emojiEl = document.getElementById('emoji-fase');
+            emojiEl.innerText = c.emoji;
+            
             const area = document.getElementById('area-blocos');
             const partes = c.soma_texto.split(' + ');
             let cliques = 0;
@@ -64,17 +109,27 @@
                         falar(p, 1.1);
                         cliques++;
                         if(cliques === partes.length) {
-                            setTimeout(() => {
-                                document.getElementById('display-frase').innerText = c.palavra;
-                                falar(c.fala_didatica, 0.9).onend = () => {
-                                    document.getElementById('btn-prox').style.display = 'block';
-                                };
-                            }, 800);
+                            setTimeout(() => finalizarFase(c), 800);
                         }
                     }
                 };
                 area.appendChild(b);
             });
+        }
+
+        function finalizarFase(c) {
+            const display = document.getElementById('display-frase');
+            const emojiEl = document.getElementById('emoji-fase');
+
+            // Ativa animações
+            emojiEl.classList.add('animar-emoji');
+            display.innerText = c.palavra;
+            display.classList.add('animar-frase');
+
+            // Voz do Lobo
+            falar(c.fala_didatica, 0.9).onend = () => {
+                document.getElementById('btn-prox').style.display = 'block';
+            };
         }
 
         function proxima() {
@@ -83,17 +138,17 @@
         }
 
         // Rastro de Honra
-        document.addEventListener('mousemove', e => mover(e.clientX, e.clientY));
-        document.addEventListener('touchmove', e => mover(e.touches[0].clientX, e.touches[0].clientY));
+        const lobo = document.getElementById('cursor-lobo');
         function mover(x,y) {
-            const l = document.getElementById('cursor-lobo');
-            l.style.left = x+'px'; l.style.top = y+'px';
+            lobo.style.left = x+'px'; lobo.style.top = y+'px';
             const p = document.createElement('div');
             p.className = 'rastro-peca';
             p.style.left = (x-15)+'px'; p.style.top = (y-15)+'px';
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 800);
         }
+        document.addEventListener('mousemove', e => mover(e.clientX, e.clientY));
+        document.addEventListener('touchmove', e => mover(e.touches[0].clientX, e.touches[0].clientY));
     </script>
 </body>
 </html>
