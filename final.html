@@ -3,79 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Missão Cumprida!</title>
+    <title>Lobo Guará - Missão Cumprida!</title>
     <style>
         body { 
-            font-family: 'Comic Sans MS', sans-serif; 
-            background: #E8F5E9; 
-            text-align: center; 
-            padding-top: 50px; 
-            margin: 0;
-            overflow: hidden;
-            cursor: none;
+            margin: 0; font-family: 'Comic Sans MS', sans-serif; 
+            background: #E8F5E9; text-align: center; 
+            overflow: hidden; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; height: 100vh;
         }
-        .trofeu { 
-            font-size: 120px; 
-            animation: pula 1s infinite alternate ease-in-out; 
-            margin-bottom: 20px;
-        }
-        @keyframes pula { 
-            from { transform: translateY(0) scale(1); } 
-            to { transform: translateY(-30px) scale(1.1); } 
-        }
-        h1 { color: #2E7D32; font-size: 3.5rem; margin: 10px; }
-        p { font-size: 1.8rem; color: #388E3C; }
         
-        .btn-voltar {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 20px 50px;
-            font-size: 1.8rem;
-            background: #1976D2;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            text-decoration: none;
-            box-shadow: 0 10px 0 #0D47A1;
-            transition: 0.2s;
-        }
-        .btn-voltar:active { transform: translateY(8px); box-shadow: none; }
+        h1 { color: #2E7D32; font-size: 3rem; margin-bottom: 10px; }
+        p { font-size: 1.5rem; color: #455A64; }
 
-        #cursor-lobo { position: fixed; width: 80px; z-index: 9999; transform: translate(-50%, -50%); pointer-events: none; }
+        #lobo-vitoria { width: 200px; animation: bounce 1s infinite; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .btn-recomecar {
+            margin-top: 30px; padding: 20px 40px; font-size: 1.8rem;
+            background: #1565C0; color: white; border: none;
+            border-radius: 20px; cursor: pointer; box-shadow: 0 8px 0 #0D47A1;
+            text-decoration: none;
+        }
+
+        /* Estilo dos Confetes */
+        .confete {
+            position: absolute; width: 10px; height: 10px;
+            opacity: 0.8; animation: cair 3s linear forwards;
+        }
+
+        @keyframes cair {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
     </style>
 </head>
 <body>
 
-    <img src="lobo.png" id="cursor-lobo">
-
-    <div style="margin-top: 10vh;">
-        <div class="trofeu">🏆</div>
-        <h1>VOCÊ CONSEGUIU!</h1>
-        <p>O Lobo Guará está muito feliz!</p>
-        
-        <a href="index.html" class="btn-voltar">JOGAR DE NOVO 🏠</a>
-    </div>
+    <h1>PARABÉNS! 🌟</h1>
+    <p>Você completou todas as frases!</p>
+    
+    <img src="lobo.png" id="lobo-vitoria" alt="Lobo Feliz">
+    
+    <br><br>
+    <a href="index.html" class="btn-recomecar">JOGAR DE NOVO ↺</a>
 
     <script>
-        // Voz de comemoração ao carregar a página
-        window.onload = () => {
-            const utter = new SpeechSynthesisUtterance("Parabéns! Você completou todas as missões. O Lobo Guará está muito orgulhoso de você!");
-            utter.lang = 'pt-BR';
-            utter.rate = 0.9;
-            window.speechSynthesis.speak(utter);
-        };
+        // Voz de parabéns
+        function vitoria() {
+            const msg = new SpeechSynthesisUtterance("Parabéns! Você é incrível! Completou todas as missões do Lobo Guará.");
+            msg.lang = 'pt-BR';
+            window.speechSynthesis.speak(msg);
+        }
 
-        // Rastro do Lobo (apenas visual aqui)
-        const lobo = document.getElementById('cursor-lobo');
-        document.addEventListener('mousemove', e => {
-            lobo.style.left = e.clientX + 'px';
-            lobo.style.top = e.clientY + 'px';
-        });
-        document.addEventListener('touchmove', e => {
-            const t = e.touches[0];
-            lobo.style.left = t.clientX + 'px';
-            lobo.style.top = t.clientY + 'px';
-        }, {passive: false});
+        // Criar Confetes
+        function criarConfetes() {
+            const cores = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#1565C0'];
+            for (let i = 0; i < 100; i++) {
+                const c = document.createElement('div');
+                c.className = 'confete';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+                c.style.top = '-10px';
+                c.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(c);
+            }
+        }
+
+        window.onload = () => {
+            vitoria();
+            criarConfetes();
+        };
     </script>
 </body>
 </html>
