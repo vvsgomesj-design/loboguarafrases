@@ -54,10 +54,10 @@
     <button id="btn-prox" onclick="proxima()">PRÓXIMA ➔</button>
 
     <script>
-        let dadosGlobal = {};
-        const urlParams = new URLSearchParams(window.location.search);
-        const fraseId = urlParams.get('s') || 'AGUA';
-        const eCustom = urlParams.get('custom') === 'true';
+        let dadosGlobal = {}; // MANTENHA ISSO AQUI!
+    const urlParams = new URLSearchParams(window.location.search);
+    const fraseId = urlParams.get('s') || 'AGUA';
+    const eCustom = urlParams.get('custom') === 'true';
 
         // LÓGICA DE CARREGAMENTO (Híbrida: JSON + Personalizadas)
         if (eCustom) {
