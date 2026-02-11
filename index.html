@@ -5,49 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lobo Guará - Menu e Criação</title>
     <style>
-        body { font-family: 'Comic Sans MS', sans-serif; background: #E3F2FD; text-align: center; padding: 20px; cursor: none; }
-        h1 { color: #1565C0; }
+        :root { --primary: #1565C0; --success: #4CAF50; --danger: #FF5252; --bg: #E3F2FD; }
         
-        /* Grid de Botões Principais */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 1100px; margin: 0 auto; }
-        .card { background: white; padding: 15px; border-radius: 20px; border: 4px solid #BBDEFB; text-decoration: none; color: #1565C0; font-weight: bold; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; transition: 0.2s; }
-        .card:active { transform: translateY(5px); }
+        body { font-family: 'Comic Sans MS', sans-serif; background: var(--bg); text-align: center; padding: 20px; cursor: none; margin: 0; min-height: 100vh; }
+        h1 { color: var(--primary); margin-bottom: 30px; }
+        
+        /* Grid de Botões do Jogo */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
+        
+        .card { 
+            background: white; padding: 20px; border-radius: 25px; border: 4px solid #BBDEFB; 
+            text-decoration: none; color: var(--primary); font-weight: bold; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            font-size: 1.1rem; transition: 0.2s; box-shadow: 0 6px 0 #BBDEFB;
+        }
+        .card:active { transform: translateY(6px); box-shadow: none; }
+        .card span { font-size: 2.5rem; margin-bottom: 10px; }
 
-        /* PAINEL DE CRIAÇÃO */
+        /* Painel de Criação dos Pais */
         .painel-criar { 
-            background: white; border: 4px dashed #1565C0; padding: 20px; 
-            border-radius: 20px; max-width: 500px; margin: 40px auto; 
+            background: white; border: 4px dashed var(--primary); padding: 25px; 
+            border-radius: 30px; max-width: 550px; margin: 50px auto; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
         
-        /* Organização das palavras em 2 colunas */
-        #container-palavras {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
+        #container-palavras { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
+        
         .painel-criar input { 
-            padding: 10px; border-radius: 10px; border: 2px solid #ddd; 
-            font-family: sans-serif; font-size: 1rem;
+            padding: 12px; border-radius: 12px; border: 2px solid #ddd; 
+            font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .painel-criar input:focus { border-color: var(--primary); }
+
+        /* Campos que ocupam a linha toda */
+        #novoEmoji, #novoID { grid-column: span 2; width: calc(100% - 28px); margin: 0 auto; }
+
+        .btn-salvar { 
+            background: var(--success); color: white; border: none; padding: 18px; 
+            border-radius: 15px; font-weight: bold; font-size: 1.1rem; cursor: pointer; 
+            width: 100%; margin-top: 10px; box-shadow: 0 5px 0 #2E7D32;
+        }
+        .btn-salvar:active { transform: translateY(3px); box-shadow: none; }
+
+        /* Painel de Gerenciamento (Deletar) */
+        .lista-gerenciamento { max-width: 550px; margin: 20px auto; background: #fff; border-radius: 20px; padding: 20px; }
+        .item-gerencia { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;
+        }
+        .btn-deletar { 
+            background: var(--danger); color: white; border: none; padding: 8px 15px; 
+            border-radius: 10px; cursor: pointer; font-size: 0.9rem;
         }
 
-        /* Inputs de topo (Emoji e Nome) ocupam a linha toda */
-        #novoEmoji, #novoID { grid-column: span 2; width: 95%; margin: 5px auto; }
-
-        .btn-salvar { background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; }
-
-        #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); left: -100px; }
+        /* Cursor do Lobo */
+        #cursor-lobo { position: fixed; width: 65px; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); left: -100px; }
     </style>
 </head>
 <body>
 
     <img src="lobo.png" id="cursor-lobo">
 
-    <h1>O que vamos falar?</h1>
+    <h1>Lobo Guará: Missão Frases</h1>
 
     <div class="grid" id="grid-principal">
-        <a href="fase.html?s=AGUA" class="card">💧<br>Beber Água</a>
+       <a href="fase.html?s=AGUA" class="card">💧<br>Beber Água</a>
 <a href="fase.html?s=XIXI" class="card">🚽<br>Ir ao Banheiro</a>
 <a href="fase.html?s=PISCINA" class="card">🏊<br>Ir na Piscina</a>
 <a href="fase.html?s=DORMIR" class="card">😴<br>Dormir</a>
@@ -82,14 +104,16 @@
 <a href="fase.html?s=JESUS" class="card">❤️<br>Amo Jesus</a>
     </div>
 
-    <hr style="margin: 40px 0; border: 1px solid #90CAF9;">
+    <hr style="margin: 60px 0; border: 1px solid #BBDEFB; opacity: 0.5;">
 
     <div class="painel-criar">
-        <h3>➕ Criar Frase com o Lobo</h3>
-        <p style="font-size: 0.9rem; color: #666;">Dica: Use <b>Windows + .</b> para os emojis!</p>
+        <h2 style="color: var(--primary); margin-top: 0;">➕ Nova Frase</h2>
+        <p style="font-size: 0.9rem; color: #666;">
+            💡 <b>Dica:</b> No computador, aperte <b>Win + .</b> para emojis!
+        </p>
         
         <div id="container-palavras">
-            <input type="text" id="novoEmoji" placeholder="Emoji aqui">
+            <input type="text" id="novoEmoji" placeholder="Cole o Emoji aqui">
             <input type="text" id="novoID" placeholder="Nome do Botão (Ex: LANCHE)">
             
             <input type="text" class="palavra-input" placeholder="Palavra 1">
@@ -100,18 +124,24 @@
             <input type="text" class="palavra-input" placeholder="Palavra 6">
         </div>
         
-        <button class="btn-salvar" onclick="salvarNovaFrase()">SALVAR NO DISPOSITIVO</button>
+        <button class="btn-salvar" onclick="salvarNovaFrase()">SALVAR FRASES NO CELULAR</button>
+    </div>
+
+    <div class="lista-gerenciamento" id="painel-exclusao">
+        <h3 style="color: var(--danger);">🗑️ Gerenciar Minhas Frases</h3>
+        <div id="lista-para-deletar"></div>
     </div>
 
     <script>
-        // 1. Mover Lobo
+        // 1. MOVIMENTO DO LOBO
         const lobo = document.getElementById('cursor-lobo');
-        document.addEventListener('mousemove', e => { lobo.style.left = e.clientX + 'px'; lobo.style.top = e.clientY + 'px'; });
+        const mover = (x, y) => { lobo.style.left = x + 'px'; lobo.style.top = y + 'px'; };
+        document.addEventListener('mousemove', e => mover(e.clientX, e.clientY));
         document.addEventListener('touchmove', e => { 
-            const t = e.touches[0]; lobo.style.left = t.clientX + 'px'; lobo.style.top = t.clientY + 'px'; 
+            const t = e.touches[0]; mover(t.clientX, t.clientY); 
         }, {passive: false});
 
-        // 2. Salvar Frase (Sua lógica de captura múltipla)
+        // 2. SALVAR NOVA FRASE (Lógica Multi-Palavras)
         function salvarNovaFrase() {
             const id = document.getElementById('novoID').value.toUpperCase().trim();
             const emoji = document.getElementById('novoEmoji').value || "✨";
@@ -125,17 +155,17 @@
             });
 
             if(!id || listaPalavras.length === 0) {
-                return alert("Preencha o Nome e pelo menos uma palavra!");
+                return alert("Ops! Digite o nome e pelo menos uma palavra.");
             }
 
-            const fraseInteira = listaPalavras.join(' ');
-            const somaTextoGerada = listaPalavras.join(' + ');
+            const fraseUnida = listaPalavras.join(' ');
+            const somaTexto = listaPalavras.join(' + ');
 
             const novaFrase = {
                 emoji: emoji,
-                palavra: fraseInteira,
-                soma_texto: somaTextoGerada,
-                fala_didatica: fraseInteira + "!",
+                palavra: fraseUnida,
+                soma_texto: somaTexto,
+                fala_didatica: fraseUnida + "!",
                 cor_fundo: "#F1F8E9",
                 cor_contorno: "#4CAF50",
                 proximo: "FIM"
@@ -145,22 +175,49 @@
             banco[id] = novaFrase;
             localStorage.setItem('minhasFrases', JSON.stringify(banco));
 
-            alert("Frase '" + id + "' salva com sucesso!");
+            alert("Frase '" + id + "' pronta para jogar!");
             location.reload();
         }
 
-        // 3. Mostrar frases criadas (Puxando do LocalStorage)
+        // 3. CARREGAR FRASES E GERENCIAR EXCLUSÃO
         const grid = document.getElementById('grid-principal');
+        const listaDeletar = document.getElementById('lista-para-deletar');
         const salvas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
-        Object.keys(salvas).forEach(id => {
-            const d = salvas[id];
+        const idsSalvos = Object.keys(salvas);
+
+        if (idsSalvos.length === 0) {
+            document.getElementById('painel-exclusao').style.display = 'none';
+        }
+
+        idsSalvos.forEach(id => {
+            const dados = salvas[id];
+            
+            // Adicionar ao Menu
             const a = document.createElement('a');
             a.href = `fase.html?s=${id}&custom=true`;
             a.className = 'card';
             a.style.borderColor = "#4CAF50";
-            a.innerHTML = `<span>${d.emoji}</span><br>${id}`;
+            a.innerHTML = `<span>${dados.emoji}</span>${id}`;
             grid.appendChild(a);
+
+            // Adicionar à lista de Deletar
+            const item = document.createElement('div');
+            item.className = 'item-gerencia';
+            item.innerHTML = `
+                <span>${dados.emoji} ${id}</span>
+                <button class="btn-deletar" onclick="deletarFrase('${id}')">Excluir 🗑️</button>
+            `;
+            listaDeletar.appendChild(item);
         });
+
+        function deletarFrase(id) {
+            if (confirm(`Quer mesmo apagar a frase "${id}"?`)) {
+                let banco = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+                delete banco[id];
+                localStorage.setItem('minhasFrases', JSON.stringify(banco));
+                location.reload();
+            }
+        }
     </script>
 </body>
 </html>
