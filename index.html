@@ -3,26 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobo Guará - Menu</title>
+    <title>Lobo Guará - Menu de Frases</title>
     <style>
-        body { font-family: 'Comic Sans MS', sans-serif; background: #E3F2FD; margin: 0; padding: 20px; text-align: center; cursor: none; }
-        h1 { color: #1565C0; font-size: 2rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; max-width: 1000px; margin: 0 auto; padding-bottom: 50px; }
-        .card { 
-            background: white; padding: 20px; border-radius: 20px; box-shadow: 0 6px 0 #bbdefb;
-            text-decoration: none; color: #1976D2; font-weight: bold; font-size: 1.4rem;
-            display: flex; align-items: center; border: 3px solid transparent; transition: 0.2s;
+        :root { --primary: #1565C0; --bg: #E3F2FD; }
+        
+        body { 
+            font-family: 'Comic Sans MS', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; padding: 20px; 
+            text-align: center; cursor: none; 
+            min-height: 100vh;
         }
-        .card:active { transform: scale(0.95); box-shadow: none; }
-        .emoji { font-size: 2.5rem; margin-right: 15px; background: #F5F5F5; padding: 10px; border-radius: 12px; }
-        #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); left: -100px; }
+
+        h1 { color: var(--primary); font-size: 2.2rem; margin-bottom: 30px; }
+
+        /* Grid de Botões */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; max-width: 1100px; margin: 0 auto; 
+        }
+
+        /* Estilo dos Cards/Botões */
+        .card { 
+            background: white; padding: 20px; border-radius: 25px; 
+            box-shadow: 0 8px 0 #BBDEFB; text-decoration: none; 
+            color: var(--primary); font-weight: bold; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: flex-start;
+            border: 4px solid transparent; transition: 0.2s;
+        }
+
+        .card:active { transform: translateY(5px); box-shadow: none; }
+        .card:hover { border-color: var(--primary); }
+
+        .emoji-btn { 
+            font-size: 2.5rem; margin-right: 20px; 
+            background: #F5F5F5; padding: 10px; border-radius: 15px; 
+        }
+
+        /* Lobo e Rastro */
+        #cursor-lobo { position: fixed; width: 65px; z-index: 10000; pointer-events: none; transform: translate(-50%, -50%); left: -100px; }
+        
+        /* Rodapé dos Pais */
+        .rodape-pais { margin-top: 60px; padding: 30px; border-top: 2px dashed #90CAF9; }
+        .btn-config { color: #546E7A; text-decoration: none; font-size: 1rem; font-weight: bold; opacity: 0.7; }
+        .btn-config:hover { opacity: 1; text-decoration: underline; }
     </style>
 </head>
 <body>
+
     <img src="lobo.png" id="cursor-lobo">
-    <h1>O que vamos falar?</h1>
-    <div class="grid">
-        <a href="fase.html?s=AGUA" class="card">💧<br>Beber Água</a>
+
+    <h1>O que vamos falar hoje?</h1>
+
+    <div class="grid" id="menu-grid"><a href="fase.html?s=AGUA" class="card">💧<br>Beber Água</a>
 <a href="fase.html?s=XIXI" class="card">🚽<br>Ir ao Banheiro</a>
 <a href="fase.html?s=PISCINA" class="card">🏊<br>Ir na Piscina</a>
 <a href="fase.html?s=DORMIR" class="card">😴<br>Dormir</a>
@@ -57,43 +91,41 @@
 <a href="fase.html?s=JESUS" class="card">❤️<br>Amo Jesus</a>
     </div>
 
+    <div class="rodape-pais">
+        <a href="config.html" class="btn-config">⚙️ ÁREA DOS PAIS (ADICIONAR FRASES)</a>
+    </div>
+
     <script>
+        // 1. MOVIMENTO DO LOBO
         const lobo = document.getElementById('cursor-lobo');
-        document.addEventListener('mousemove', e => { lobo.style.left = e.clientX + 'px'; lobo.style.top = e.clientY + 'px'; });
-        document.addEventListener('touchmove', e => { 
-            const t = e.touches[0]; lobo.style.left = t.clientX + 'px'; lobo.style.top = t.clientY + 'px'; 
-        }, {passive: false});
-    </script>
-    <script>
-        // Esta parte lê as frases novas que os pais salvaram no celular/computador
-        const gridMenu = document.querySelector('.grid') || document.querySelector('.lista-frases'); 
+        function moverLobo(x, y) {
+            lobo.style.left = x + 'px';
+            lobo.style.top = y + 'px';
+        }
+        document.addEventListener('mousemove', e => moverLobo(e.clientX, e.clientY));
+        document.addEventListener('touchmove', e => moverLobo(e.touches[0].clientX, e.touches[0].clientY));
+
+        // 2. CARREGAR FRASES PERSONALIZADAS DOS PAIS
+        const grid = document.getElementById('menu-grid');
         const personalizadas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
 
         Object.keys(personalizadas).forEach(id => {
             const p = personalizadas[id];
             const novoCard = document.createElement('a');
             
-            // Avisa o jogo que essa frase é personalizada com o &custom=true
+            // Link com o parâmetro 'custom=true' para o fase.html saber onde buscar os dados
             novoCard.href = `fase.html?s=${id}&custom=true`;
             novoCard.className = 'card';
+            novoCard.style.borderColor = "#4CAF50"; // Destaque sutil para frases novas
             
-            // Usa o emoji e o ID que o pai escolheu
-            novoCard.innerHTML = `<span class="emoji-btn">${p.emoji}</span> ${id}`;
+            novoCard.innerHTML = `
+                <span class="emoji-btn">${p.emoji || '✨'}</span>
+                ${id}
+            `;
             
-            if (gridMenu) gridMenu.appendChild(novoCard);
+            grid.appendChild(novoCard);
         });
-        // Código para carregar frases personalizadas no menu
-    const listaExtra = document.querySelector('.grid'); // Seleciona onde ficam os botões
-    const personalizadas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
-
-    Object.keys(personalizadas).forEach(id => {
-        const p = personalizadas[id];
-        const novoCard = document.createElement('a');
-        novoCard.href = `fase.html?s=${id}&custom=true`;
-        novoCard.className = 'card';
-        novoCard.innerHTML = `<span class="emoji">${p.emoji}</span> ${p.id || id}`;
-        listaExtra.appendChild(novoCard);
-    });
     </script>
+
 </body>
 </html>
