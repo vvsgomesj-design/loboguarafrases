@@ -96,30 +96,43 @@
 
         // 2. Salvar Frase
         function salvarNovaFrase() {
-            const id = document.getElementById('novoID').value.toUpperCase().trim();
-            const emoji = document.getElementById('novoEmoji').value;
-            const soma = document.getElementById('novaSoma').value;
-            const fala = document.getElementById('novaFala').value;
-
-            if(!id || !soma) return alert("Preencha o Nome e as Palavras!");
-
-            const novaFrase = {
-                emoji: emoji || "✨",
-                palavra: soma.replace(/\+/g, '').replace(/\s/g, ' '),
-                soma_texto: soma,
-                fala_didatica: fala || soma.replace(/\+/g, ''),
-                cor_fundo: "#F1F8E9",
-                cor_contorno: "#4CAF50",
-                proximo: "FIM"
-            };
-
-            let banco = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
-            banco[id] = novaFrase;
-            localStorage.setItem('minhasFrases', JSON.stringify(banco));
-
-            alert("Frase salva!");
-            location.reload(); // Recarrega para mostrar o novo botão
+    const id = document.getElementById('novoID').value.toUpperCase().trim();
+    const emoji = document.getElementById('novoEmoji').value || "✨";
+    
+    // Captura todas as palavras digitadas nos inputs
+    const inputs = document.querySelectorAll('.palavra-input');
+    let listaPalavras = [];
+    
+    inputs.forEach(input => {
+        if(input.value.trim() !== "") {
+            listaPalavras.push(input.value.trim().toUpperCase());
         }
+    });
+
+    if(!id || listaPalavras.length === 0) {
+        return alert("Preencha o Nome e pelo menos uma palavra!");
+    }
+
+    const fraseInteira = listaPalavras.join(' ');
+    const somaTextoGerada = listaPalavras.join(' + ');
+
+    const novaFrase = {
+        emoji: emoji,
+        palavra: fraseInteira,
+        soma_texto: somaTextoGerada,
+        fala_didatica: fraseInteira + "!",
+        cor_fundo: "#F1F8E9",
+        cor_contorno: "#4CAF50",
+        proximo: "FIM"
+    };
+
+    let banco = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+    banco[id] = novaFrase;
+    localStorage.setItem('minhasFrases', JSON.stringify(banco));
+
+    alert("Frase '" + id + "' criada com " + listaPalavras.length + " palavras!");
+    location.reload();
+}
 
         // 3. Mostrar frases criadas
         const grid = document.getElementById('grid-principal');
