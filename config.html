@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar Frases</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f0f4f8; }
+        .box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #1976D2; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .lista { margin-top: 20px; }
+        .item-frase { background: #eee; padding: 10px; margin: 5px 0; border-radius: 5px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>➕ Nova Frase Personalizada</h2>
+        <input type="text" id="id" placeholder="ID (Ex: PASSEIO)">
+        <input type="text" id="emoji" placeholder="Emoji (Ex: 🚗)">
+        <input type="text" id="soma" placeholder="Palavras (Ex: EU + QUERO + PASSEAR)">
+        <input type="text" id="didatica" placeholder="O que o Lobo vai falar?">
+        <button onclick="salvarFrase()">SALVAR NO DISPOSITIVO</button>
+    </div>
+
+    <div class="lista" id="listaPersonalizada"></div>
+    <br>
+    <a href="index.html">⬅️ Voltar ao Menu</a>
+
+    <script>
+        function salvarFrase() {
+            const novaFrase = {
+                emoji: document.getElementById('emoji').value,
+                palavra: document.getElementById('soma').value.replace(/\+/g, ''),
+                soma_texto: document.getElementById('soma').value,
+                fala_didatica: document.getElementById('didatica').value,
+                cor_fundo: "#E8F5E9",
+                cor_contorno: "#2E7D32",
+                proximo: "FIM"
+            };
+            
+            const id = document.getElementById('id').value.toUpperCase();
+            let personalizadas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+            personalizadas[id] = novaFrase;
+            
+            localStorage.setItem('minhasFrases', JSON.stringify(personalizadas));
+            alert("Frase salva com sucesso!");
+            location.reload();
+        }
+    </script>
+</body>
+</html>
