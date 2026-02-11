@@ -8,18 +8,34 @@
         body { font-family: 'Comic Sans MS', sans-serif; background: #E3F2FD; text-align: center; padding: 20px; cursor: none; }
         h1 { color: #1565C0; }
         
-        /* Grid de Botões */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; max-width: 1000px; margin: 0 auto; }
-        .card { background: white; padding: 15px; border-radius: 20px; border: 4px solid #BBDEFB; text-decoration: none; color: #1565C0; font-weight: bold; display: flex; align-items: center; font-size: 1.2rem; }
-        .emoji-btn { font-size: 2rem; margin-right: 15px; }
+        /* Grid de Botões Principais */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 1100px; margin: 0 auto; }
+        .card { background: white; padding: 15px; border-radius: 20px; border: 4px solid #BBDEFB; text-decoration: none; color: #1565C0; font-weight: bold; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; transition: 0.2s; }
+        .card:active { transform: translateY(5px); }
 
-        /* ÁREA DE CRIAR FRASE (O PAINEL QUE VOCÊ QUER) */
+        /* PAINEL DE CRIAÇÃO */
         .painel-criar { 
             background: white; border: 4px dashed #1565C0; padding: 20px; 
             border-radius: 20px; max-width: 500px; margin: 40px auto; 
         }
-        .painel-criar input { width: 80%; padding: 10px; margin: 5px; border-radius: 10px; border: 2px solid #ddd; }
-        .btn-salvar { background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        
+        /* Organização das palavras em 2 colunas */
+        #container-palavras {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .painel-criar input { 
+            padding: 10px; border-radius: 10px; border: 2px solid #ddd; 
+            font-family: sans-serif; font-size: 1rem;
+        }
+
+        /* Inputs de topo (Emoji e Nome) ocupam a linha toda */
+        #novoEmoji, #novoID { grid-column: span 2; width: 95%; margin: 5px auto; }
+
+        .btn-salvar { background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; }
 
         #cursor-lobo { position: fixed; width: 60px; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); left: -100px; }
     </style>
@@ -69,22 +85,23 @@
     <hr style="margin: 40px 0; border: 1px solid #90CAF9;">
 
     <div class="painel-criar">
-    <h3>➕ Criar Frase com o Lobo</h3>
-    
-    <p style="font-size: 0.9rem; color: #666;">Dica: Use <b>Windows + .</b> para colocar emojis!</p>
-    <input type="text" id="novoEmoji" placeholder="Coloque o Emoji aqui">
-    
-    <input type="text" id="novoID" placeholder="Nome do Botão (Ex: LANCHE)">
-    
-    <div id="container-palavras">
-        <input type="text" class="palavra-input" placeholder="Palavra 1 (Ex: EU)">
-        <input type="text" class="palavra-input" placeholder="Palavra 2 (Ex: QUERO)">
-        <input type="text" class="palavra-input" placeholder="Palavra 3 (Ex: MAÇÃ)">
+        <h3>➕ Criar Frase com o Lobo</h3>
+        <p style="font-size: 0.9rem; color: #666;">Dica: Use <b>Windows + .</b> para os emojis!</p>
+        
+        <div id="container-palavras">
+            <input type="text" id="novoEmoji" placeholder="Emoji aqui">
+            <input type="text" id="novoID" placeholder="Nome do Botão (Ex: LANCHE)">
+            
+            <input type="text" class="palavra-input" placeholder="Palavra 1">
+            <input type="text" class="palavra-input" placeholder="Palavra 2">
+            <input type="text" class="palavra-input" placeholder="Palavra 3">
+            <input type="text" class="palavra-input" placeholder="Palavra 4">
+            <input type="text" class="palavra-input" placeholder="Palavra 5">
+            <input type="text" class="palavra-input" placeholder="Palavra 6">
+        </div>
+        
+        <button class="btn-salvar" onclick="salvarNovaFrase()">SALVAR NO DISPOSITIVO</button>
     </div>
-    
-    <p style="font-size: 0.8rem; color: #1565C0;">O Lobo falará a frase completa no final.</p>
-    <button class="btn-salvar" onclick="salvarNovaFrase()">SALVAR NO DISPOSITIVO</button>
-</div>
 
     <script>
         // 1. Mover Lobo
@@ -94,47 +111,45 @@
             const t = e.touches[0]; lobo.style.left = t.clientX + 'px'; lobo.style.top = t.clientY + 'px'; 
         }, {passive: false});
 
-        // 2. Salvar Frase
+        // 2. Salvar Frase (Sua lógica de captura múltipla)
         function salvarNovaFrase() {
-    const id = document.getElementById('novoID').value.toUpperCase().trim();
-    const emoji = document.getElementById('novoEmoji').value || "✨";
-    
-    // Captura todas as palavras digitadas nos inputs
-    const inputs = document.querySelectorAll('.palavra-input');
-    let listaPalavras = [];
-    
-    inputs.forEach(input => {
-        if(input.value.trim() !== "") {
-            listaPalavras.push(input.value.trim().toUpperCase());
+            const id = document.getElementById('novoID').value.toUpperCase().trim();
+            const emoji = document.getElementById('novoEmoji').value || "✨";
+            const inputs = document.querySelectorAll('.palavra-input');
+            let listaPalavras = [];
+            
+            inputs.forEach(input => {
+                if(input.value.trim() !== "") {
+                    listaPalavras.push(input.value.trim().toUpperCase());
+                }
+            });
+
+            if(!id || listaPalavras.length === 0) {
+                return alert("Preencha o Nome e pelo menos uma palavra!");
+            }
+
+            const fraseInteira = listaPalavras.join(' ');
+            const somaTextoGerada = listaPalavras.join(' + ');
+
+            const novaFrase = {
+                emoji: emoji,
+                palavra: fraseInteira,
+                soma_texto: somaTextoGerada,
+                fala_didatica: fraseInteira + "!",
+                cor_fundo: "#F1F8E9",
+                cor_contorno: "#4CAF50",
+                proximo: "FIM"
+            };
+
+            let banco = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+            banco[id] = novaFrase;
+            localStorage.setItem('minhasFrases', JSON.stringify(banco));
+
+            alert("Frase '" + id + "' salva com sucesso!");
+            location.reload();
         }
-    });
 
-    if(!id || listaPalavras.length === 0) {
-        return alert("Preencha o Nome e pelo menos uma palavra!");
-    }
-
-    const fraseInteira = listaPalavras.join(' ');
-    const somaTextoGerada = listaPalavras.join(' + ');
-
-    const novaFrase = {
-        emoji: emoji,
-        palavra: fraseInteira,
-        soma_texto: somaTextoGerada,
-        fala_didatica: fraseInteira + "!",
-        cor_fundo: "#F1F8E9",
-        cor_contorno: "#4CAF50",
-        proximo: "FIM"
-    };
-
-    let banco = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
-    banco[id] = novaFrase;
-    localStorage.setItem('minhasFrases', JSON.stringify(banco));
-
-    alert("Frase '" + id + "' criada com " + listaPalavras.length + " palavras!");
-    location.reload();
-}
-
-        // 3. Mostrar frases criadas
+        // 3. Mostrar frases criadas (Puxando do LocalStorage)
         const grid = document.getElementById('grid-principal');
         const salvas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
         Object.keys(salvas).forEach(id => {
@@ -143,7 +158,7 @@
             a.href = `fase.html?s=${id}&custom=true`;
             a.className = 'card';
             a.style.borderColor = "#4CAF50";
-            a.innerHTML = `<span class="emoji-btn">${d.emoji}</span> ${id}`;
+            a.innerHTML = `<span>${d.emoji}</span><br>${id}`;
             grid.appendChild(a);
         });
     </script>
