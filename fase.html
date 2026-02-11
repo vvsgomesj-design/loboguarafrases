@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobo Guará - Missão Animada</title>
+    <title>Lobo Guará - Missão Frases</title>
     <style>
         body { margin: 0; font-family: 'Comic Sans MS', sans-serif; text-align: center; overflow: hidden; cursor: none; height: 100vh; }
         
@@ -15,14 +15,9 @@
         .rastro-peca { position: fixed; width: 35px; height: 35px; background-image: url('peca.png'); background-size: contain; pointer-events: none; z-index: 9999; animation: sumir 0.8s forwards; }
         @keyframes sumir { to { opacity: 0; transform: scale(0.5); } }
 
-        /* Elementos da Fase */
+        /* Elementos Visuais */
         #emoji-fase { font-size: 100px; margin-top: 60px; transition: 0.5s; display: inline-block; }
-        
-        #display-frase { 
-            font-size: 2.5rem; color: #1565C0; font-weight: bold; 
-            margin: 20px; min-height: 60px; opacity: 0; 
-        }
-
+        #display-frase { font-size: 2.5rem; color: #1565C0; font-weight: bold; margin: 20px; min-height: 60px; opacity: 0; }
         .area-blocos { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
         
         .bloco { 
@@ -31,27 +26,20 @@
             cursor: pointer; box-shadow: 0 8px 0 #bbb; transition: 0.2s;
         }
 
-        #btn-prox { 
-            display: none; margin: 20px auto; padding: 20px 50px; 
-            font-size: 2rem; background: #4CAF50; color: white; 
-            border-radius: 25px; border: none; box-shadow: 0 8px 0 #2E7D32; 
-        }
+        #btn-prox { display: none; margin: 20px auto; padding: 20px 50px; font-size: 2rem; background: #4CAF50; color: white; border-radius: 25px; border: none; box-shadow: 0 8px 0 #2E7D32; cursor: pointer; }
 
-        /* --- ANIMAÇÕES DE VITÓRIA --- */
+        /* Animações */
         .animar-emoji { animation: pulaGira 1s ease-out; }
-        
         @keyframes pulaGira {
             0% { transform: scale(1) rotate(0deg); }
             30% { transform: scale(1.4) translateY(-20px) rotate(-10deg); }
             50% { transform: rotate(10deg); }
             100% { transform: scale(1) translateY(0) rotate(0deg); }
         }
-
         .animar-frase { animation: surgeFrase 0.8s forwards; }
-        
         @keyframes surgeFrase {
-            0% { opacity: 0; transform: translateY(20px); color: #FF5722; }
-            100% { opacity: 1; transform: translateY(0); color: #1565C0; }
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -62,20 +50,26 @@
     
     <div id="emoji-fase"></div>
     <div id="display-frase"></div>
-    
     <div class="area-blocos" id="area-blocos"></div>
-    
     <button id="btn-prox" onclick="proxima()">PRÓXIMA ➔</button>
 
     <script>
         let dadosGlobal = {};
         const urlParams = new URLSearchParams(window.location.search);
         const fraseId = urlParams.get('s') || 'AGUA';
+        const eCustom = urlParams.get('custom') === 'true';
 
-        fetch('dados.json').then(r => r.json()).then(data => {
-            dadosGlobal = data;
-            montarFase(data[fraseId]);
-        });
+        // LÓGICA DE CARREGAMENTO (Híbrida: JSON + Personalizadas)
+        if (eCustom) {
+            const personalizadas = JSON.parse(localStorage.getItem('minhasFrases') || '{}');
+            dadosGlobal = personalizadas;
+            montarFase(personalizadas[fraseId]);
+        } else {
+            fetch('dados.json').then(r => r.json()).then(data => {
+                dadosGlobal = data;
+                montarFase(data[fraseId]);
+            });
+        }
 
         function falar(t, v) {
             window.speechSynthesis.cancel();
@@ -86,10 +80,13 @@
         }
 
         function montarFase(c) {
-            if(!c) return;
+            if(!c) {
+                alert("Ops! Frase não encontrada.");
+                window.location.href = 'index.html';
+                return;
+            }
             document.body.style.backgroundColor = c.cor_fundo;
-            const emojiEl = document.getElementById('emoji-fase');
-            emojiEl.innerText = c.emoji;
+            document.getElementById('emoji-fase').innerText = c.emoji;
             
             const area = document.getElementById('area-blocos');
             const partes = c.soma_texto.split(' + ');
@@ -121,12 +118,10 @@
             const display = document.getElementById('display-frase');
             const emojiEl = document.getElementById('emoji-fase');
 
-            // Ativa animações
             emojiEl.classList.add('animar-emoji');
             display.innerText = c.palavra;
             display.classList.add('animar-frase');
 
-            // Voz do Lobo
             falar(c.fala_didatica, 0.9).onend = () => {
                 document.getElementById('btn-prox').style.display = 'block';
             };
@@ -134,10 +129,11 @@
 
         function proxima() {
             const p = dadosGlobal[fraseId].proximo;
-            window.location.href = (p === "FIM") ? 'final.html' : `fase.html?s=${p}`;
+            if(p === "FIM" || !p) window.location.href = 'final.html';
+            else window.location.href = `fase.html?s=${p}${eCustom ? '&custom=true' : ''}`;
         }
 
-        // Rastro de Honra
+        // Movimento do Lobo
         const lobo = document.getElementById('cursor-lobo');
         function mover(x,y) {
             lobo.style.left = x+'px'; lobo.style.top = y+'px';
